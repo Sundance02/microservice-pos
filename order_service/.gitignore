@@ -5,3 +5,4 @@ order_service/.env
 user_service/.env
 gateway/.env
 /src/generated/prisma
+.env
