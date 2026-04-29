@@ -1,0 +1,51 @@
+services:
+  product-db:
+    image: postgres:latest
+    container_name: product_db
+    environment: 
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: product_db
+    ports:
+      - "5431:5432"
+    volumes:
+      - product_pg_data:/var/lib/postgresql
+  order-db:
+    image: postgres:latest
+    container_name: order_db
+    environment: 
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: order_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - order_pg_data:/var/lib/postgresql
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: pos-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  user-db:
+    image: postgres:latest
+    container_name: user_db
+    environment: 
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_pg_data:/var/lib/postgresql    
+
+volumes:
+  product_pg_data:
+  order_pg_data:
+  user_pg_data:
+  rabbitmq_data:

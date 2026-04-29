@@ -1,0 +1,7 @@
+node_modules
+# Keep environment variables out of version control
+product_service/.env
+order_service/.env
+user_service/.env
+gateway/.env
+/src/generated/prisma
