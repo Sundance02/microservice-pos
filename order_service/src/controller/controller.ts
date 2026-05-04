@@ -83,7 +83,7 @@ class OrderController {
                 return { inventory_id: id, type: "Sale" }
             })
             //7. order บอกให้ product service ตัดของได้เลย (อยากลองใช้ queue)
-            Queue.sendToQueue(transaction, "Paid")
+            Queue.sendToQueue(transaction, process.env.SQS_URL??"")
 
             //8. สร้างข้อมูล order
             const orderData: CreateOrderInput = this.createOrderData(productItems, order)

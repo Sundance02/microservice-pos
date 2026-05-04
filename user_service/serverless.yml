@@ -1,0 +1,35 @@
+service: user-service
+configValidationMode: off
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-7 
+  stage: dev
+  memorySize: 512
+  timeout: 30
+  vpc:
+    securityGroupIds:
+      - sg-01455008f2c181443
+    subnetIds:
+      - subnet-077c38d5d8fae22f0
+      - subnet-0eb12f79aec689d86
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    SECRETKEY: ${env:SECRETKEY}
+
+package:
+  patterns:
+    - '!node_modules/.pnpm/**'
+    - 'node_modules/.prisma/**'
+    - 'node_modules/@prisma/client/**'
+
+functions:
+  app:
+    handler: src/lambda.handler 
+    events:
+      - httpApi: '*'

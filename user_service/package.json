@@ -2,11 +2,13 @@
   "name": "user_service",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "pnpm prisma generate && sls deploy",
+    "build": "esbuild src/lambda.ts --bundle --platform=node --target=node20 --minify --outfile=dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@vendia/serverless-express": "^4.12.6",
     "amqplib": "^1.0.3",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
@@ -28,12 +31,16 @@
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.8",
+    "@types/aws-lambda": "^8.10.161",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0",
     "prisma": "^7.8.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-plugin-typescript": "^2.1.5",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   }
