@@ -8,7 +8,7 @@
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "pnpm prisma generate && sls deploy",
-    "build": "esbuild src/lambda.ts --bundle --platform=node --target=node20 --minify --outfile=dist/index.js"
+    "build": "esbuild src/lambda.ts --bundle --platform=node --target=node20 --format=esm --minify --outfile=dist/index.js --banner:js=\"import { createRequire } from 'module'; import { fileURLToPath } from 'url'; import { dirname } from 'path'; const require = createRequire(import.meta.url); const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);\""
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,7 @@
     "@prisma/client": "^7.8.0",
     "@vendia/serverless-express": "^4.12.6",
     "amqplib": "^1.0.3",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -32,7 +32,6 @@
   "devDependencies": {
     "@types/amqplib": "^0.10.8",
     "@types/aws-lambda": "^8.10.161",
-    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",

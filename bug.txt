@@ -1,0 +1,1 @@
+1.url สำหรับเชื่อม rds ด้วย prisma มี bug อยู่ต้องใช้ sslmode=no-verify

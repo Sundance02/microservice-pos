@@ -4,7 +4,18 @@ import { z } from 'zod';
 export const zodValidate = (schema: z.ZodTypeAny) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await schema.safeParseAsync(req.body);
+            const raw = req.body;
+            const requestBody =
+                raw == null || raw === ''
+                    ? {}
+                    : Buffer.isBuffer(raw)
+                        ? JSON.parse(raw.toString('utf8'))
+                        : typeof raw === 'string'
+                            ? JSON.parse(raw)
+                            : typeof raw === 'object'
+                                ? raw
+                                : {};
+            const result = await schema.safeParseAsync(requestBody);
             if (!result.success) {
                 return res.status(400).json({
                     success: false,
